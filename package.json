@@ -1,0 +1,43 @@
+{
+	"name": "pixel-motion-parser",
+	"version": "0.0.1",
+	"description": "A Pixel motion image splitter.",
+	"author": "Jeff Seaman",
+	"contributors": [
+		"Jeff Seaman <mr.jeffrey.seaman@gmail.com> (https://www.ngc6822.com)"
+	],
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/core": "^7.4.4",
+		"@babel/node": "^7.2.2",
+		"@babel/preset-env": "^7.4.4"
+	},
+	"main": "index.js",
+	"scripts": {
+		"start": "babel-node -- src/index.js test out"
+	},
+	"babel": {
+		"presets": [
+			[
+				"@babel/preset-env",
+				{
+					"targets": {
+						"node": "current"
+					}
+				}
+			]
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/obsius/pixel-motion-splitter.git"
+	},
+	"keywords": [
+		"pixel",
+		"motion",
+		"android",
+		"images",
+		"pictures",
+		"split"
+	]
+}
