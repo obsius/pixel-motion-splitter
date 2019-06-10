@@ -10,10 +10,10 @@ const IMG_DELIM = Buffer.from([0xFF, 0xD9, 0x00, 0x00, 0x00, 0x18]);
 let scannedNum = 0;
 let splitNum = 0;
 
-function splitFile(srcFilename, destPath) {
+function splitFile(srcFilename, destPath, dirPath) {
 
 	// original file path / name / extension
-	let destLocal = path.join(destPath, path.dirname(srcFilename));
+	let destLocal = path.join(destPath, dirPath);
 	let filename = path.basename(srcFilename).split('.')[0];
 	let extension = path.extname(srcFilename);
 
@@ -22,6 +22,7 @@ function splitFile(srcFilename, destPath) {
 	// split the buffer at the delimeter
 	let splitAt = buffer.indexOf(IMG_DELIM);
 	if (~splitAt) {
+
 
 		fs.mkdirSync(destLocal, { recursive: true });
 
@@ -34,7 +35,7 @@ function splitFile(srcFilename, destPath) {
 	scannedNum++;
 }
 
-function splitFiles(dir, destPath) {
+function splitFiles(dir, destPath, dirPath = '') {
 	let files = fs.readdirSync(dir);
 
 	for (let file of files) {
@@ -42,17 +43,15 @@ function splitFiles(dir, destPath) {
 		let filePath = path.join(dir, file);
 
 		if (fs.statSync(filePath).isDirectory()) {
-			splitFiles(filePath, destPath);
+			splitFiles(filePath, destPath, path.join(dirPath, file));
 		} else {
-			splitFile(filePath, destPath);
+			splitFile(filePath, destPath, dirPath);
 		}
 	}
 }
 
 try {
 	console.log('Scanning...');
-
-	console.log(process.argv);
 
 	if (process.argv.length != 4) {
 		throw new Error('Failed to read args for src folder and destination folder: split <src> <dest>');
